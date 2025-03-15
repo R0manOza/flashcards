@@ -136,9 +136,9 @@ export function getHint(card: Flashcard): string {
  * Computes statistics about the user's learning progress.
  *
  * @param buckets representation of learning buckets.
- * @param history representation of user's answer history.
+ * @param history representation of user's answer history maps flashcard to number of correct and incorrect answers.
  * @returns statistics about learning progress.
- * @spec.requires history is valid representation of history defined in this function
+ * @spec.requires history is valid representation of history defined in this function with flashcard as key and nuimber of correct and incorrect answers on that flashcard as value.
  */
 export function computeProgress(buckets: BucketMap, history: Map<Flashcard, { correct: number; incorrect: number }>): any {
   let total=0;
