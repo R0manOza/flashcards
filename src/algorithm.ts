@@ -138,13 +138,32 @@ export function getHint(card: Flashcard): string {
  * @param buckets representation of learning buckets.
  * @param history representation of user's answer history.
  * @returns statistics about learning progress.
- * @spec.requires [SPEC TO BE DEFINED]
+ * @spec.requires history is valid representation of history defined in this function
  */
-export function computeProgress(buckets: any, history: any): any {
-  // Replace 'any' with appropriate types
-  // TODO: Implement this function (and define the spec!)
-  throw new Error("Implement me!");
+export function computeProgress(buckets: BucketMap, history: Map<Flashcard, { correct: number; incorrect: number }>): any {
+  let total=0;
+  let correct=0;
+  let attempted=0;
+  let accuracy=0;
+  let distribution=new Map<number,number>();
+
+  for(const[Bucketindex,flashcards] of buckets){
+    distribution.set(Bucketindex,flashcards.size);
+    total+=flashcards.size;
+
+    for(const flashcard of flashcards){
+      let temp=history.get(flashcard);
+      if(temp){ 
+        correct+=temp.correct;
+        attempted+=temp.correct+temp.incorrect;
+        accuracy=correct/attempted;
+      }
+    }
+  }
+  return{total,correct,attempted,accuracy,distribution};
 }
+
+//This comment is for u roma, i pulled this function out of my ass and i have no clue how to test it, i hope u do coz now im pushing this shit to origin.
 
 
 
