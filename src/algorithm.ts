@@ -19,14 +19,12 @@ import { Flashcard, AnswerDifficulty, BucketMap } from "./flashcards";
  * @spec.requires buckets is a valid representation of flashcard buckets.
  */
 export function toBucketSets(buckets: BucketMap): Array<Set<Flashcard>> {
-  // TODO: Implement this function
-   //initialize an empty array to be returned 
-   let arrayOfsetsOfFlashcards :Array<Set<Flashcard>> = [] ;
-   //use for  each  to push each set of flashcards into the new array arrayOfsetsOfFlashcards
-   buckets.forEach(( value) => {
-     arrayOfsetsOfFlashcards.push(value);
-   } );
-   return  arrayOfsetsOfFlashcards ;
+  let arr:Array<Set<Flashcard>>=[];
+  buckets.forEach((value,key)=>{
+    arr.push(value);
+  });
+
+  return arr;
 }
 
 /**
@@ -40,8 +38,22 @@ export function toBucketSets(buckets: BucketMap): Array<Set<Flashcard>> {
 export function getBucketRange(
   buckets: Array<Set<Flashcard>>
 ): { minBucket: number; maxBucket: number } | undefined {
-  // TODO: Implement this function
-  throw new Error("Implement me!");
+  let minBucket=0;
+  let maxBucket=0;
+
+  for(let bucket of buckets){
+    if(bucket.size>0){
+      minBucket=buckets.indexOf(bucket);
+      break;
+    }
+  }
+
+  for(let bucket of buckets){
+    if(buckets.indexOf(bucket)>maxBucket && bucket.size>0){
+      maxBucket=buckets.indexOf(bucket);
+    }
+  }
+  return {minBucket,maxBucket}
 }
 
 /**
@@ -57,8 +69,15 @@ export function practice(
   buckets: Array<Set<Flashcard>>,
   day: number
 ): Set<Flashcard> {
-  // TODO: Implement this function
-  throw new Error("Implement me!");
+  let practice_set=new Set<Flashcard>();
+  for(let bucket of buckets){
+    if(day%(2**buckets.indexOf(bucket))==0){
+      for(let flashcard of bucket){
+        practice_set.add(flashcard);
+      }
+    }
+  }
+  return practice_set;
 }
 
 /**
@@ -75,8 +94,31 @@ export function update(
   card: Flashcard,
   difficulty: AnswerDifficulty
 ): BucketMap {
-  // TODO: Implement this function
-  throw new Error("Implement me!");
+
+  let temp=0;
+  if(difficulty==0){
+    buckets.set(0,new Set([card]));
+  }
+  else 
+  if(difficulty==1){
+    buckets.forEach((value,key)=>{
+      if(value.has(card)){
+        temp=key;      }
+    })
+    buckets.set(temp+1,new Set([card]));
+  }
+  else 
+  if(difficulty==2){
+    buckets.forEach((value,key)=>{
+      if(value.has(card)){
+        temp=key;      }
+    })
+    if(temp!=0){
+      buckets.set(temp-1,new Set([card]));
+    }
+  }
+  
+  return buckets;
 }
 
 /**
@@ -87,8 +129,7 @@ export function update(
  * @spec.requires card is a valid Flashcard.
  */
 export function getHint(card: Flashcard): string {
-  // TODO: Implement this function (and strengthen the spec!)
-  throw new Error("Implement me!");
+  return card.hint;
 }
 
 /**
@@ -104,3 +145,47 @@ export function computeProgress(buckets: any, history: any): any {
   // TODO: Implement this function (and define the spec!)
   throw new Error("Implement me!");
 }
+
+
+
+
+// const flashcard1 = new Flashcard("Capital of France?", "Paris", "Eiffel Tower", ["geography"]);
+// const flashcard2 = new Flashcard("2 + 2?", "4", "Basic math", ["math"]);
+// const flashcard3 = new Flashcard("Who wrote Hamlet?", "Shakespeare", "Famous playwright", ["literature"]);
+// const flashcard4 = new Flashcard("H2O is the chemical formula for?", "Water", "Essential for life", ["science"]);
+// const flashcard5 = new Flashcard("Largest planet in the Solar System?", "Jupiter", "Gas giant", ["astronomy"]);
+
+// const bucketMap1: BucketMap = new Map([
+//   [0, new Set([flashcard1, flashcard2])],
+//   [1, new Set([flashcard3])],
+//   [2, new Set([flashcard4, flashcard5])],
+// ]);
+
+// const bucketMap2: BucketMap = new Map([
+//   [0, new Set([flashcard3])],
+//   [1, new Set([flashcard1, flashcard5])],
+//   [2, new Set([flashcard2])],
+//   [3, new Set([flashcard4])],
+// ]);
+
+// const bucketMap3: BucketMap = new Map([
+//   [0, new Set([flashcard1, flashcard2, flashcard3, flashcard4, flashcard5])],
+// ]);
+
+// const bucketMap4: BucketMap = new Map([
+//   [0, new Set([])],
+//   [1, new Set([])],
+//   [2, new Set([flashcard2,flashcard1,flashcard4])],
+//   [3, new Set([flashcard3, flashcard5])],
+// ]);
+
+// console.log(toBucketSets(bucketMap1));
+// console.log(toBucketSets(bucketMap2));
+// console.log(toBucketSets(bucketMap3));
+// console.log(toBucketSets(bucketMap4));
+
+
+// console.log(getBucketRange(toBucketSets(bucketMap1)));
+// console.log(getBucketRange(toBucketSets(bucketMap2)));
+// console.log(getBucketRange(toBucketSets(bucketMap3)));
+// console.log(getBucketRange(toBucketSets(bucketMap4)));
