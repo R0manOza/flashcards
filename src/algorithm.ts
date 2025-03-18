@@ -88,6 +88,7 @@ export function practice(
  * @param difficulty how well the user did on the card in this practice trial.
  * @returns updated Map of learning buckets.
  * @spec.requires buckets is a valid representation of flashcard buckets.
+ * USE CASES !!! TOO MANY IFS !!!
  */
 export function update(
   buckets: BucketMap,
@@ -164,7 +165,8 @@ export function computeProgress(buckets: BucketMap, history: Map<Flashcard, { co
 }
 
 //Tornike :This comment is for u roma, i pulled this function out of my ass and i have no clue how to test it, i hope u do coz now im pushing this shit to origin.
-//Roma : go fuck yourself 
+//Roma : wtf man , what the hell is this supposed to do ?
+// am sleepy bye 
 
 
 
