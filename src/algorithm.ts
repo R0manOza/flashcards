@@ -163,8 +163,8 @@ export function computeProgress(buckets: BucketMap, history: Map<Flashcard, { co
   return{total,correct,attempted,accuracy,distribution};
 }
 
-//This comment is for u roma, i pulled this function out of my ass and i have no clue how to test it, i hope u do coz now im pushing this shit to origin.
-
+//Tornike :This comment is for u roma, i pulled this function out of my ass and i have no clue how to test it, i hope u do coz now im pushing this shit to origin.
+//Roma : go fuck yourself 
 
 
 
