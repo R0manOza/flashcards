@@ -104,6 +104,47 @@ describe("getBucketRange()", () => {
     
     
   });
+  it("first index is empty", () => {
+    let setofflashcards1 = simpleflashcardgenerator(1,1);
+    let setofflashcards2 = new Set<Flashcard>([]);
+    let setofflashcards3 = simpleflashcardgenerator(1,3);
+    let setofflashcards4 = simpleflashcardgenerator(1,4);
+    let setofflashcards5 = simpleflashcardgenerator(1,5);
+    let bucketmap = new Map<number, Set<Flashcard>>();
+    bucketmap.set(1,setofflashcards1);
+    bucketmap.set(2,setofflashcards2);
+    bucketmap.set(3,setofflashcards3);
+    bucketmap.set(4,setofflashcards4);
+    bucketmap.set(5,setofflashcards5);
+    let arrayofsets = toBucketSets(bucketmap);
+    let range = getBucketRange(arrayofsets);
+  }
+  );
+  it("all flashcards are in the first bucket", () => {
+    let setofflashcards1 = simpleflashcardgenerator(5,1);
+    let setofflashcards2 = new Set<Flashcard>([]);
+    let bucketmap = new Map<number, Set<Flashcard>>();
+    bucketmap.set(1,setofflashcards1);
+    bucketmap.set(2,setofflashcards2);
+    bucketmap.set(3,setofflashcards2);
+    bucketmap.set(4,setofflashcards2);
+    bucketmap.set(5,setofflashcards2);
+    let arrayofsets = toBucketSets(bucketmap);
+    let range = getBucketRange(arrayofsets);
+  }
+  );
+  it("all buckets are empty" ,() =>{
+    let setofflashcards1 = new Set<Flashcard>([]);
+    let bucketmap = new Map<number, Set<Flashcard>>();
+    bucketmap.set(1,setofflashcards1);
+    bucketmap.set(2,setofflashcards1);
+    bucketmap.set(3,setofflashcards1);
+    bucketmap.set(4,setofflashcards1);
+    bucketmap.set(5,setofflashcards1);
+    let arrayofsets = toBucketSets(bucketmap);
+    let range = getBucketRange(arrayofsets);
+
+  });
 });
 
 /*
@@ -139,6 +180,7 @@ describe("update()", () => {
     let updated = update(bucketmap, card, 0);
     assert(updated.get(0)?.has(card));
   });
+  
 });
 
 /*
@@ -164,7 +206,7 @@ describe("getHint()", () => {
 describe("computeProgress()", () => {
   it("Example test case - replace with your own tests", () => {
     assert.fail(
-      "TORNIKE DO SOMETHING !!! WTH IS THIS CREATION OF YOURS ? IT DON'T MAKE NO SENSE TO ME "
+      "TORNIKE DO SOMETHING !!! WTH IS THIS CREATION OF YOURS ? IT DON'T MAKE NO SENSE TO ME - ROMA"
     );
   });
 });
