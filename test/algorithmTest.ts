@@ -173,7 +173,7 @@ describe("practice()", () => {
  * 1. demote card to bucket 0 when difficulty is 0
  */
 describe("update()", () => {
-  it("should demote card to bucket 0 when difficulty is 0", () => {
+  it("should demote card to bucket 0 from bucket 1  when difficulty is 0", () => {
     let card = new Flashcard("Question", "Answer", "Hint", ["tag"]);
     let bucketmap = new Map<number, Set<Flashcard>>();
     bucketmap.set(1, new Set([card]));

@@ -85,7 +85,7 @@ export function practice(
  *
  * @param buckets Map representation of learning buckets.
  * @param card flashcard that was practiced.
- * @param difficulty how well the user did on the card in this practice trial. 0 is worst, 2 is best.
+ * @param difficulty how well the user did on the card in this practice trial. 
  * @returns updated Map of learning buckets.
  * @spec.requires buckets is a valid representation of flashcard buckets.
  * USE CASES !!! TOO MANY IFS !!!
