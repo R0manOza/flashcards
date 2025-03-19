@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Problem Set 1: Flashcards - Algorithm Functions
  *
@@ -7,9 +8,13 @@
  * Please DO NOT modify the signatures of the exported functions in this file,
  * or you risk failing the autograder.
  */
-
-import { Flashcard, AnswerDifficulty, BucketMap } from "./flashcards";
-
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.toBucketSets = toBucketSets;
+exports.getBucketRange = getBucketRange;
+exports.practice = practice;
+exports.update = update;
+exports.getHint = getHint;
+exports.computeProgress = computeProgress;
 /**
  * Converts a Map representation of learning buckets into an Array-of-Set representation.
  *
@@ -18,15 +23,13 @@ import { Flashcard, AnswerDifficulty, BucketMap } from "./flashcards";
  *          Buckets with no cards will have empty sets in the array.
  * @spec.requires buckets is a valid representation of flashcard buckets.
  */
-export function toBucketSets(buckets: BucketMap): Array<Set<Flashcard>> {
-  let arr:Array<Set<Flashcard>>=[];
-  buckets.forEach((value,key)=>{
-    arr.push(value);
-  });
-
-  return arr;
+function toBucketSets(buckets) {
+    let arr = [];
+    buckets.forEach((value, key) => {
+        arr.push(value);
+    });
+    return arr;
 }
-
 /**
  * Finds the range of buckets that contain flashcards, as a rough measure of progress.
  *
@@ -35,27 +38,22 @@ export function toBucketSets(buckets: BucketMap): Array<Set<Flashcard>> {
  *          or undefined if no buckets contain cards.
  * @spec.requires buckets is a valid Array-of-Set representation of flashcard buckets.
  */
-export function getBucketRange(
-  buckets: Array<Set<Flashcard>>
-): { minBucket: number; maxBucket: number } | undefined {
-  let minBucket=0;
-  let maxBucket=0;
-
-  for(let bucket of buckets){
-    if(bucket.size>0){
-      minBucket=buckets.indexOf(bucket);
-      break;
+function getBucketRange(buckets) {
+    let minBucket = 0;
+    let maxBucket = 0;
+    for (let bucket of buckets) {
+        if (bucket.size > 0) {
+            minBucket = buckets.indexOf(bucket);
+            break;
+        }
     }
-  }
-
-  for(let bucket of buckets){
-    if(buckets.indexOf(bucket)>maxBucket && bucket.size>0){
-      maxBucket=buckets.indexOf(bucket);
+    for (let bucket of buckets) {
+        if (buckets.indexOf(bucket) > maxBucket && bucket.size > 0) {
+            maxBucket = buckets.indexOf(bucket);
+        }
     }
-  }
-  return {minBucket,maxBucket}
+    return { minBucket, maxBucket };
 }
-
 /**
  * Selects cards to practice on a particular day.
  *
@@ -65,64 +63,52 @@ export function getBucketRange(
  *          according to the Modified-Leitner algorithm.
  * @spec.requires buckets is a valid Array-of-Set representation of flashcard buckets.
  */
-export function practice(
-  buckets: Array<Set<Flashcard>>,
-  day: number
-): Set<Flashcard> {
-  let practice_set=new Set<Flashcard>();
-  for(let bucket of buckets){
-    if(day%(2**buckets.indexOf(bucket))==0){
-      for(let flashcard of bucket){
-        practice_set.add(flashcard);
-      }
+function practice(buckets, day) {
+    let practice_set = new Set();
+    for (let bucket of buckets) {
+        if (day % (2 ** buckets.indexOf(bucket)) == 0) {
+            for (let flashcard of bucket) {
+                practice_set.add(flashcard);
+            }
+        }
     }
-  }
-  return practice_set;
+    return practice_set;
 }
-
 /**
  * Updates a card's bucket number after a practice trial.
  *
  * @param buckets Map representation of learning buckets.
  * @param card flashcard that was practiced.
- * @param difficulty how well the user did on the card in this practice trial. 0 is worst, 2 is best.
+ * @param difficulty how well the user did on the card in this practice trial.
  * @returns updated Map of learning buckets.
  * @spec.requires buckets is a valid representation of flashcard buckets.
  * USE CASES !!! TOO MANY IFS !!!
- * 
  */
-export function update(
-  buckets: BucketMap,
-  card: Flashcard,
-  difficulty: AnswerDifficulty
-): BucketMap {
-
-  let temp=0;
-  if(difficulty==0){
-    buckets.set(0,new Set([card]));
-  }
-  else 
-  if(difficulty==1){
-    buckets.forEach((value,key)=>{
-      if(value.has(card)){
-        temp=key;      }
-    })
-    buckets.set(temp+1,new Set([card]));
-  }
-  else 
-  if(difficulty==2){
-    buckets.forEach((value,key)=>{
-      if(value.has(card)){
-        temp=key;      }
-    })
-    if(temp!=0){
-      buckets.set(temp-1,new Set([card]));
+function update(buckets, card, difficulty) {
+    let temp = 0;
+    if (difficulty == 0) {
+        buckets.set(0, new Set([card]));
     }
-  }
-  
-  return buckets;
+    else if (difficulty == 1) {
+        buckets.forEach((value, key) => {
+            if (value.has(card)) {
+                temp = key;
+            }
+        });
+        buckets.set(temp + 1, new Set([card]));
+    }
+    else if (difficulty == 2) {
+        buckets.forEach((value, key) => {
+            if (value.has(card)) {
+                temp = key;
+            }
+        });
+        if (temp != 0) {
+            buckets.set(temp - 1, new Set([card]));
+        }
+    }
+    return buckets;
 }
-
 /**
  * Generates a hint for a flashcard.
  *
@@ -130,88 +116,70 @@ export function update(
  * @returns a hint for the front of the flashcard.
  * @spec.requires card is a valid Flashcard.
  */
-export function getHint(card: Flashcard): string {
-  return card.hint;
+function getHint(card) {
+    return card.hint;
 }
-
 /**
  * Computes statistics about the user's learning progress.
  *
  * @param buckets representation of learning buckets.
  * @param history representation of user's answer history maps flashcard to number of correct and incorrect answers.
  * @returns statistics about learning progress.
- * @spec.requires history is valid representation of history defined in this function with flashcard as key and number of correct and incorrect answers on that flashcard as value.
+ * @spec.requires history is valid representation of history defined in this function with flashcard as key and nuimber of correct and incorrect answers on that flashcard as value.
  */
-export function computeProgress(buckets: BucketMap, history: Map<Flashcard, { correct: number; incorrect: number }>): any {
-  let total=0;
-  let correct=0;
-  let attempted=0;
-  let accuracy=0;
-  let distribution=new Map<number,number>();
-
-  for(const[Bucketindex,flashcards] of buckets){
-    distribution.set(Bucketindex,flashcards.size);
-    total+=flashcards.size;
-
-    for(const flashcard of flashcards){
-      let temp=history.get(flashcard);
-      if(temp){ 
-        correct+=temp.correct;
-        attempted+=temp.correct+temp.incorrect;
-        accuracy=correct/attempted;
-      }
+function computeProgress(buckets, history) {
+    let total = 0;
+    let correct = 0;
+    let attempted = 0;
+    let accuracy = 0;
+    let distribution = new Map();
+    for (const [Bucketindex, flashcards] of buckets) {
+        distribution.set(Bucketindex, flashcards.size);
+        total += flashcards.size;
+        for (const flashcard of flashcards) {
+            let temp = history.get(flashcard);
+            if (temp) {
+                correct += temp.correct;
+                attempted += temp.correct + temp.incorrect;
+                accuracy = correct / attempted;
+            }
+        }
     }
-  }
-  return{total,correct,attempted,accuracy,distribution};
+    return { total, correct, attempted, accuracy, distribution };
 }
-
-<<<<<<< HEAD
-//This comment is for u roma, i pulled this function out of my ass and i have no clue how to test it, i hope u do coz now im pushing this shit to origin.
-=======
 //Tornike :This comment is for u roma, i pulled this function out of my ass and i have no clue how to test it, i hope u do coz now im pushing this shit to origin.
 //Roma : wtf man , what the hell is this supposed to do ?
 // am sleepy bye 
-
-
-
 // const flashcard1 = new Flashcard("Capital of France?", "Paris", "Eiffel Tower", ["geography"]);
 // const flashcard2 = new Flashcard("2 + 2?", "4", "Basic math", ["math"]);
 // const flashcard3 = new Flashcard("Who wrote Hamlet?", "Shakespeare", "Famous playwright", ["literature"]);
 // const flashcard4 = new Flashcard("H2O is the chemical formula for?", "Water", "Essential for life", ["science"]);
 // const flashcard5 = new Flashcard("Largest planet in the Solar System?", "Jupiter", "Gas giant", ["astronomy"]);
-
 // const bucketMap1: BucketMap = new Map([
 //   [0, new Set([flashcard1, flashcard2])],
 //   [1, new Set([flashcard3])],
 //   [2, new Set([flashcard4, flashcard5])],
 // ]);
-
 // const bucketMap2: BucketMap = new Map([
 //   [0, new Set([flashcard3])],
 //   [1, new Set([flashcard1, flashcard5])],
 //   [2, new Set([flashcard2])],
 //   [3, new Set([flashcard4])],
 // ]);
-
 // const bucketMap3: BucketMap = new Map([
 //   [0, new Set([flashcard1, flashcard2, flashcard3, flashcard4, flashcard5])],
 // ]);
-
 // const bucketMap4: BucketMap = new Map([
 //   [0, new Set([])],
 //   [1, new Set([])],
 //   [2, new Set([flashcard2,flashcard1,flashcard4])],
 //   [3, new Set([flashcard3, flashcard5])],
 // ]);
-
 // console.log(toBucketSets(bucketMap1));
 // console.log(toBucketSets(bucketMap2));
 // console.log(toBucketSets(bucketMap3));
 // console.log(toBucketSets(bucketMap4));
-
-
 // console.log(getBucketRange(toBucketSets(bucketMap1)));
 // console.log(getBucketRange(toBucketSets(bucketMap2)));
 // console.log(getBucketRange(toBucketSets(bucketMap3)));
 // console.log(getBucketRange(toBucketSets(bucketMap4)));
->>>>>>> main
