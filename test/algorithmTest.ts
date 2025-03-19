@@ -209,4 +209,9 @@ describe("computeProgress()", () => {
       "TORNIKE DO SOMETHING !!! WTH IS THIS CREATION OF YOURS ? IT DON'T MAKE NO SENSE TO ME - ROMA"
     );
   });
+  it("Example test case - WTF U MEAN", () => {
+    assert.fail(
+      "ROMA THIS IS PERFECTION, YOU JUST DON'T UNDERSTAND IT - TORNIKE"
+    );
+  });
 });
