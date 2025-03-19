@@ -180,21 +180,21 @@ describe("update()", () => {
     let updated = update(bucketmap, card, 0);
     assert(updated.get(0)?.has(card));
   });
-  it("should promote card to next bucket when difficulty is 1", () => {
+  it("should promote card to next bucket when difficulty is 2", () => {
     let card = new Flashcard("Question", "Answer", "Hint", ["tag"]);
     let bucketmap = new Map<number, Set<Flashcard>>();
     bucketmap.set(0, new Set([card]));
     bucketmap.set(1, new Set([]));
-    let updated = update(bucketmap, card, 1);
+    let updated = update(bucketmap, card, 2);
     assert(updated.get(1)?.has(card));
   });
-  it("should demote by one bucket when difficulty is 2", () => {
+  it("should demote by one bucket when difficulty is 1", () => {
     let card = new Flashcard("Question", "Answer", "Hint", ["tag"]);
     let bucketmap = new Map<number, Set<Flashcard>>();
     bucketmap.set(0, new Set([]));
     bucketmap.set(1, new Set([]));
     bucketmap.set(2, new Set([card]));
-    let updated = update(bucketmap, card, 2);
+    let updated = update(bucketmap, card, 1);
     assert(updated.get(1)?.has(card));
   });
 });

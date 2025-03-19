@@ -102,7 +102,7 @@ export function update(
     buckets.set(0,new Set([card]));
   }
   else 
-  if(difficulty==1){
+  if(difficulty==2){
     buckets.forEach((value,key)=>{
       if(value.has(card)){
         temp=key;      }
@@ -110,7 +110,7 @@ export function update(
     buckets.set(temp+1,new Set([card]));
   }
   else 
-  if(difficulty==2){
+  if(difficulty==1){
     buckets.forEach((value,key)=>{
       if(value.has(card)){
         temp=key;      }
