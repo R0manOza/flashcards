@@ -165,53 +165,6 @@ export function computeProgress(buckets: BucketMap, history: Map<Flashcard, { co
   return{total,correct,attempted,accuracy,distribution};
 }
 
-<<<<<<< HEAD
-//This comment is for u roma, i pulled this function out of my ass and i have no clue how to test it, i hope u do coz now im pushing this shit to origin.
-=======
 //Tornike :This comment is for u roma, i pulled this function out of my ass and i have no clue how to test it, i hope u do coz now im pushing this shit to origin.
 //Roma : wtf man , what the hell is this supposed to do ?
 // am sleepy bye 
-
-
-
-// const flashcard1 = new Flashcard("Capital of France?", "Paris", "Eiffel Tower", ["geography"]);
-// const flashcard2 = new Flashcard("2 + 2?", "4", "Basic math", ["math"]);
-// const flashcard3 = new Flashcard("Who wrote Hamlet?", "Shakespeare", "Famous playwright", ["literature"]);
-// const flashcard4 = new Flashcard("H2O is the chemical formula for?", "Water", "Essential for life", ["science"]);
-// const flashcard5 = new Flashcard("Largest planet in the Solar System?", "Jupiter", "Gas giant", ["astronomy"]);
-
-// const bucketMap1: BucketMap = new Map([
-//   [0, new Set([flashcard1, flashcard2])],
-//   [1, new Set([flashcard3])],
-//   [2, new Set([flashcard4, flashcard5])],
-// ]);
-
-// const bucketMap2: BucketMap = new Map([
-//   [0, new Set([flashcard3])],
-//   [1, new Set([flashcard1, flashcard5])],
-//   [2, new Set([flashcard2])],
-//   [3, new Set([flashcard4])],
-// ]);
-
-// const bucketMap3: BucketMap = new Map([
-//   [0, new Set([flashcard1, flashcard2, flashcard3, flashcard4, flashcard5])],
-// ]);
-
-// const bucketMap4: BucketMap = new Map([
-//   [0, new Set([])],
-//   [1, new Set([])],
-//   [2, new Set([flashcard2,flashcard1,flashcard4])],
-//   [3, new Set([flashcard3, flashcard5])],
-// ]);
-
-// console.log(toBucketSets(bucketMap1));
-// console.log(toBucketSets(bucketMap2));
-// console.log(toBucketSets(bucketMap3));
-// console.log(toBucketSets(bucketMap4));
-
-
-// console.log(getBucketRange(toBucketSets(bucketMap1)));
-// console.log(getBucketRange(toBucketSets(bucketMap2)));
-// console.log(getBucketRange(toBucketSets(bucketMap3)));
-// console.log(getBucketRange(toBucketSets(bucketMap4)));
->>>>>>> main
