@@ -19,8 +19,8 @@ import { Flashcard, AnswerDifficulty, BucketMap } from "./flashcards";
  * @spec.requires buckets is a valid representation of flashcard buckets.
  */
 export function toBucketSets(buckets: BucketMap): Array<Set<Flashcard>> {
-  let arr:Array<Set<Flashcard>>=[];
-  buckets.forEach((value,key)=>{
+  let arr: Array<Set<Flashcard>> = [];
+  buckets.forEach((value, key) => {
     arr.push(value);
   });
 
@@ -38,22 +38,22 @@ export function toBucketSets(buckets: BucketMap): Array<Set<Flashcard>> {
 export function getBucketRange(
   buckets: Array<Set<Flashcard>>
 ): { minBucket: number; maxBucket: number } | undefined {
-  let minBucket=0;
-  let maxBucket=0;
+  let minBucket = 0;
+  let maxBucket = 0;
 
-  for(let bucket of buckets){
-    if(bucket.size>0){
-      minBucket=buckets.indexOf(bucket);
+  for (let bucket of buckets) {
+    if (bucket.size > 0) {
+      minBucket = buckets.indexOf(bucket);
       break;
     }
   }
 
-  for(let bucket of buckets){
-    if(buckets.indexOf(bucket)>maxBucket && bucket.size>0){
-      maxBucket=buckets.indexOf(bucket);
+  for (let bucket of buckets) {
+    if (buckets.indexOf(bucket) > maxBucket && bucket.size > 0) {
+      maxBucket = buckets.indexOf(bucket);
     }
   }
-  return {minBucket,maxBucket}
+  return { minBucket, maxBucket };
 }
 
 /**
@@ -69,10 +69,10 @@ export function practice(
   buckets: Array<Set<Flashcard>>,
   day: number
 ): Set<Flashcard> {
-  let practice_set=new Set<Flashcard>();
-  for(let bucket of buckets){
-    if(day%(2**buckets.indexOf(bucket))==0){
-      for(let flashcard of bucket){
+  let practice_set = new Set<Flashcard>();
+  for (let bucket of buckets) {
+    if (day % 2 ** buckets.indexOf(bucket) == 0) {
+      for (let flashcard of bucket) {
         practice_set.add(flashcard);
       }
     }
@@ -89,37 +89,34 @@ export function practice(
  * @returns updated Map of learning buckets.
  * @spec.requires buckets is a valid representation of flashcard buckets.
  * USE CASES !!! TOO MANY IFS !!!
- * 
+ *
  */
 export function update(
   buckets: BucketMap,
   card: Flashcard,
   difficulty: AnswerDifficulty
 ): BucketMap {
-
-  let temp=0;
-  if(difficulty==0){
-    buckets.set(0,new Set([card]));
-  }
-  else 
-  if(difficulty==1){
-    buckets.forEach((value,key)=>{
-      if(value.has(card)){
-        temp=key;      }
-    })
-    buckets.set(temp+1,new Set([card]));
-  }
-  else 
-  if(difficulty==2){
-    buckets.forEach((value,key)=>{
-      if(value.has(card)){
-        temp=key;      }
-    })
-    if(temp!=0){
-      buckets.set(temp-1,new Set([card]));
+  let temp = 0;
+  if (difficulty == 0) {
+    buckets.set(0, new Set([card]));
+  } else if (difficulty == 1) {
+    buckets.forEach((value, key) => {
+      if (value.has(card)) {
+        temp = key;
+      }
+    });
+    buckets.set(temp + 1, new Set([card]));
+  } else if (difficulty == 2) {
+    buckets.forEach((value, key) => {
+      if (value.has(card)) {
+        temp = key;
+      }
+    });
+    if (temp != 0) {
+      buckets.set(temp - 1, new Set([card]));
     }
   }
-  
+
   return buckets;
 }
 
@@ -142,29 +139,32 @@ export function getHint(card: Flashcard): string {
  * @returns statistics about learning progress.
  * @spec.requires history is valid representation of history defined in this function with flashcard as key and number of correct and incorrect answers on that flashcard as value.
  */
-export function computeProgress(buckets: BucketMap, history: Map<Flashcard, { correct: number; incorrect: number }>): any {
-  let total=0;
-  let correct=0;
-  let attempted=0;
-  let accuracy=0;
-  let distribution=new Map<number,number>();
+export function computeProgress(
+  buckets: BucketMap,
+  history: Map<Flashcard, { correct: number; incorrect: number }>
+): any {
+  let total = 0;
+  let correct = 0;
+  let attempted = 0;
+  let accuracy = 0;
+  let distribution = new Map<number, number>();
 
-  for(const[Bucketindex,flashcards] of buckets){
-    distribution.set(Bucketindex,flashcards.size);
-    total+=flashcards.size;
+  for (const [Bucketindex, flashcards] of buckets) {
+    distribution.set(Bucketindex, flashcards.size);
+    total += flashcards.size;
 
-    for(const flashcard of flashcards){
-      let temp=history.get(flashcard);
-      if(temp){ 
-        correct+=temp.correct;
-        attempted+=temp.correct+temp.incorrect;
-        accuracy=correct/attempted;
+    for (const flashcard of flashcards) {
+      let temp = history.get(flashcard);
+      if (temp) {
+        correct += temp.correct;
+        attempted += temp.correct + temp.incorrect;
+        accuracy = correct / attempted;
       }
     }
   }
-  return{total,correct,attempted,accuracy,distribution};
+  return { total, correct, attempted, accuracy, distribution };
 }
 
 //Tornike :This comment is for u roma, i pulled this function out of my ass and i have no clue how to test it, i hope u do coz now im pushing this shit to origin.
 //Roma : wtf man , what the hell is this supposed to do ?
-// am sleepy bye 
+// am sleepy bye
