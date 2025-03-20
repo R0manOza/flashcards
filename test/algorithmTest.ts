@@ -203,14 +203,27 @@ describe("update()", () => {
  * Testing strategy for getHint():
  *
  * DONE: Describe your testing strategy for getHint() here.
- * self explanitory no need fo comment 
- * i hope you got brain tornike ... i still dont know what to do with last thing 
+ * test cases where the flashcard is normal 
+ * where the flashcard has no hint
+ * where the flashcard is epmty 
+ * 
  */
 describe("getHint()", () => {
   it("should return the correct hint for a flashcard", () => {
     let card = new Flashcard("Q", "A", "Hint123", ["tag"]);
     assert.strictEqual(getHint(card), "Hint123");
   });
+  it("should return empty string if hint is not provided " , () =>
+  {
+    let card = new Flashcard("Q", "A", "", ["tag"]);
+    assert.strictEqual(getHint(card), "");
+  }) ;
+  it("should return empty string if hint is not provided " , () =>
+  {
+    let card = new Flashcard("", "", "", [""]);
+    assert.strictEqual(getHint(card), "");
+  }) ;
+
 });
 
 /*
