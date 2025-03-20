@@ -85,7 +85,7 @@ export function practice(
  *
  * @param buckets Map representation of learning buckets.
  * @param card flashcard that was practiced.
- * @param difficulty how well the user did on the card in this practice trial. 0 is worst, 2 is best.
+ * @param difficulty how well the user did on the card in this practice trial. 
  * @returns updated Map of learning buckets.
  * @spec.requires buckets is a valid representation of flashcard buckets.
  * USE CASES !!! TOO MANY IFS !!!
@@ -96,6 +96,7 @@ export function update(
   card: Flashcard,
   difficulty: AnswerDifficulty
 ): BucketMap {
+<<<<<<< HEAD
   let temp = 0;
   if (difficulty == 0) {
     buckets.set(0, new Set([card]));
@@ -114,6 +115,29 @@ export function update(
     });
     if (temp != 0) {
       buckets.set(temp - 1, new Set([card]));
+=======
+
+  let temp=0;
+  if(difficulty==0){
+    buckets.set(0,new Set([card]));
+  }
+  else 
+  if(difficulty==2){
+    buckets.forEach((value,key)=>{
+      if(value.has(card)){
+        temp=key;      }
+    })
+    buckets.set(temp+1,new Set([card]));
+  }
+  else 
+  if(difficulty==1){
+    buckets.forEach((value,key)=>{
+      if(value.has(card)){
+        temp=key;      }
+    })
+    if(temp!=0){
+      buckets.set(temp-1,new Set([card]));
+>>>>>>> main
     }
   }
 

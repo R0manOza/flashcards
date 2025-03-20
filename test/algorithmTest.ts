@@ -173,28 +173,57 @@ describe("practice()", () => {
  * 1. demote card to bucket 0 when difficulty is 0
  */
 describe("update()", () => {
-  it("should demote card to bucket 0 when difficulty is 0", () => {
+  it("should demote card to bucket 0   when difficulty is 0", () => {
     let card = new Flashcard("Question", "Answer", "Hint", ["tag"]);
     let bucketmap = new Map<number, Set<Flashcard>>();
     bucketmap.set(1, new Set([card]));
     let updated = update(bucketmap, card, 0);
     assert(updated.get(0)?.has(card));
   });
-  
+  it("should promote card to next bucket when difficulty is 2", () => {
+    let card = new Flashcard("Question", "Answer", "Hint", ["tag"]);
+    let bucketmap = new Map<number, Set<Flashcard>>();
+    bucketmap.set(0, new Set([card]));
+    bucketmap.set(1, new Set([]));
+    let updated = update(bucketmap, card, 2);
+    assert(updated.get(1)?.has(card));
+  });
+  it("should demote by one bucket when difficulty is 1", () => {
+    let card = new Flashcard("Question", "Answer", "Hint", ["tag"]);
+    let bucketmap = new Map<number, Set<Flashcard>>();
+    bucketmap.set(0, new Set([]));
+    bucketmap.set(1, new Set([]));
+    bucketmap.set(2, new Set([card]));
+    let updated = update(bucketmap, card, 1);
+    assert(updated.get(1)?.has(card));
+  });
 });
 
 /*
  * Testing strategy for getHint():
  *
  * DONE: Describe your testing strategy for getHint() here.
- * self explanitory no need fo comment 
- * i hope you got brain tornike ... i still dont know what to do with last thing 
+ * test cases where the flashcard is normal 
+ * where the flashcard has no hint
+ * where the flashcard is epmty 
+ * 
  */
 describe("getHint()", () => {
   it("should return the correct hint for a flashcard", () => {
     let card = new Flashcard("Q", "A", "Hint123", ["tag"]);
     assert.strictEqual(getHint(card), "Hint123");
   });
+  it("should return empty string if hint is not provided " , () =>
+  {
+    let card = new Flashcard("Q", "A", "", ["tag"]);
+    assert.strictEqual(getHint(card), "");
+  }) ;
+  it("should return empty string if hint is not provided " , () =>
+  {
+    let card = new Flashcard("", "", "", [""]);
+    assert.strictEqual(getHint(card), "");
+  }) ;
+
 });
 
 /*
