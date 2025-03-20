@@ -213,10 +213,10 @@ describe("getHint()", () => {
     let card = new Flashcard("Q", "A", "Hint123", ["tag"]);
     assert.strictEqual(getHint(card), "Hint123");
   });
-  it("should return empty string if hint is not provided " , () =>
+  it("should return first letter of answer  if hint is not provided by the card  " , () =>
   {
-    let card = new Flashcard("Q", "A", "", ["tag"]);
-    assert.strictEqual(getHint(card), "");
+    let card = new Flashcard("Q", "Anas", "", ["tag"]);
+    assert.strictEqual(getHint(card), "A");
   }) ;
   it("should return empty string if hint is not provided " , () =>
   {
