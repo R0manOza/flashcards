@@ -96,26 +96,6 @@ export function update(
   card: Flashcard,
   difficulty: AnswerDifficulty
 ): BucketMap {
-<<<<<<< HEAD
-  let temp = 0;
-  if (difficulty == 0) {
-    buckets.set(0, new Set([card]));
-  } else if (difficulty == 1) {
-    buckets.forEach((value, key) => {
-      if (value.has(card)) {
-        temp = key;
-      }
-    });
-    buckets.set(temp + 1, new Set([card]));
-  } else if (difficulty == 2) {
-    buckets.forEach((value, key) => {
-      if (value.has(card)) {
-        temp = key;
-      }
-    });
-    if (temp != 0) {
-      buckets.set(temp - 1, new Set([card]));
-=======
 
   let temp=0;
   if(difficulty==0){
@@ -137,7 +117,6 @@ export function update(
     })
     if(temp!=0){
       buckets.set(temp-1,new Set([card]));
->>>>>>> main
     }
   }
 
@@ -148,11 +127,17 @@ export function update(
  * Generates a hint for a flashcard.
  *
  * @param card flashcard to hint
- * @returns a hint for the front of the flashcard.
+ * @returns a hint for the front of the flashcard If hint is empty string give user first letter of answer.
  * @spec.requires card is a valid Flashcard.
  */
 export function getHint(card: Flashcard): string {
-  return card.hint;
+  if(card.hint===""){
+    if(card.back===""){
+      return "";
+    }
+      return card.back[0]+'';
+  }
+  return card.hint
 }
 
 /**
