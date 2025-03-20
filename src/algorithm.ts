@@ -151,7 +151,13 @@ export function getHint(card: Flashcard): string {
 export function computeProgress(
   buckets: BucketMap,
   history: Map<Flashcard, { correct: number; incorrect: number }>
-): any {
+): {
+  total: number;
+  correct: number;  
+  attempted: number;
+  accuracy: number; 
+  distribution: Map<number, number>;
+} {
   let total = 0;
   let correct = 0;
   let attempted = 0;
